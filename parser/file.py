@@ -1,10 +1,16 @@
 import os  
 import re
 import pprint
+#from mydb import connect
 from ConfigParser import SafeConfigParser
 
 def percentage(part, whole):
   return round(100 * float(part)/float(whole),2) 
+  
+def dbcommit(host, result):
+    print "commit"
+    
+
  
 def parse(file): 
     with open(file) as f:
@@ -56,14 +62,19 @@ def main():
     config = SafeConfigParser()
     config.read('config.ini')
     folder = config.get('jtree', 'folder')
+    ins_sql = config.get('jtree', 'sql')
     for fn in os.listdir(folder):
         print fn
         name = fn
         full_path = folder + fn
         result = parse(full_path)
         pprint.pprint(result)
-        #for item in result:
-        #    sql = "insert into jtree (router, fpc , segment, used, available, percentage) item"       
+        #cnx_router = connect(1)
+        #cursor_router = cnx_router.cursor()
+        query = ("")
+        for item in result:
+            sql = ins_sql
+            print sql            
 
 if __name__ == "__main__":
     main()
